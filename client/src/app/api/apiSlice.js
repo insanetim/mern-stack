@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const baseUrl =
   process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:3500'
-    : 'https://mern-stack-insanetim.onrender.com/'
+    ? 'http://localhost:3500/api/'
+    : 'https://mern-stack-insanetim.onrender.com/api/'
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),

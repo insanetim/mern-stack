@@ -21,14 +21,14 @@ app.use(express.json())
 
 app.use(cookieParser())
 
-app.use('/users', require('./routes/userRoutes'))
-app.use('/notes', require('./routes/noteRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/notes', require('./routes/noteRoutes'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 
   app.all('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   })
 }
 
