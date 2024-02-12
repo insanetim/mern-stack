@@ -4,11 +4,21 @@
   "description": "techNotes MERN Project",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server"
+    "start": "cross-env NODE_ENV=production node server",
+    "server": "nodemon server",
+    "client": "npm run start --prefix client",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm:server\" \"npm:client\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mern",
+    "node",
+    "express",
+    "mongodb",
+    "react"
+  ],
+  "author": "Timur Medvedev <insanetim1986@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -23,6 +33,8 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "nodemon": "^3.0.3"
   }
 }
