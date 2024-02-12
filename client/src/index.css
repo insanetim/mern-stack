@@ -279,6 +279,10 @@ tr {
   border-radius: 15px;
 }
 
+select.form__input {
+  overflow-y: auto;
+}
+
 .form__input--text {
   min-height: 150px;
 }
@@ -294,7 +298,6 @@ tr {
 }
 
 .form__select {
-  width: fit-content;
   padding: 0.25em;
 }
 
