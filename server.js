@@ -21,8 +21,9 @@ app.use(express.json())
 
 app.use(cookieParser())
 
-app.use('/api/users', require('./routes/userRoutes'))
-app.use('/api/notes', require('./routes/noteRoutes'))
+app.use('/auth', require('./routes/authRoutes'))
+app.use('/users', require('./routes/userRoutes'))
+app.use('/notes', require('./routes/noteRoutes'))
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
