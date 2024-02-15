@@ -5,8 +5,10 @@ import { faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 
 import { useUpdateNoteMutation, useDeleteNoteMutation } from './notesApiSlice'
+import useAuth from '../../hooks/useAuth'
 
 const EditNoteForm = ({ note, users }) => {
+  const { isManager, isAdmin } = useAuth()
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
   const [
@@ -76,6 +78,19 @@ const EditNoteForm = ({ note, users }) => {
 
   const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
+  let deleteButton = null
+  if (isManager || isAdmin) {
+    deleteButton = (
+      <button
+        className='icon-button'
+        title='Delete'
+        onClick={onDeleteNoteClicked}
+      >
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
+    )
+  }
+
   const content = (
     <>
       <p className={classNames(isError || isDelError ? 'errmsg' : 'offscreen')}>
@@ -97,13 +112,7 @@ const EditNoteForm = ({ note, users }) => {
             >
               <FontAwesomeIcon icon={faSave} />
             </button>
-            <button
-              className='icon-button'
-              title='Delete'
-              onClick={onDeleteNoteClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            {deleteButton}
           </div>
         </div>
         <label
