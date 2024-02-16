@@ -1,13 +1,17 @@
 import { useRef, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
+import PulseLoader from 'react-spinners/PulseLoader'
 import classNames from 'classnames'
 
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
 import usePersist from '../../hooks/usePersist'
+import useTitle from '../../hooks/useTitle'
 
 const Login = () => {
+  useTitle('Dan D. Repairs | Login')
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -53,7 +57,7 @@ const Login = () => {
     }
   }
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <PulseLoader color='#fff' />
 
   const content = (
     <section className='public'>

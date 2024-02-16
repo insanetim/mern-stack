@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { ROLES } from './config/roles'
 import Layout from './components/Layout'
@@ -87,6 +87,16 @@ function App() {
             </Route>
           </Route>
         </Route>
+
+        <Route
+          path='*'
+          element={
+            <Navigate
+              to='/'
+              replace
+            />
+          }
+        />
       </Route>
     </Routes>
   )

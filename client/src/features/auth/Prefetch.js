@@ -7,13 +7,12 @@ import { usersApiSlice } from '../users/usersApiSlice'
 
 const Prefetch = () => {
   useEffect(() => {
-    const notes = store.dispatch(notesApiSlice.endpoints.getNotes.initiate())
-    const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate())
-
-    return () => {
-      notes.unsubscribe()
-      users.unsubscribe()
-    }
+    store.dispatch(
+      notesApiSlice.util.prefetch('getNotes', 'notesList', { force: true })
+    )
+    store.dispatch(
+      usersApiSlice.util.prefetch('getUsers', 'usersList', { force: true })
+    )
   }, [])
 
   return <Outlet />

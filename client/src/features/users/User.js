@@ -1,14 +1,18 @@
-import { useSelector } from 'react-redux'
+import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 
-import { selectUserById } from './usersApiSlice'
+import { useGetUsersQuery } from './usersApiSlice'
 
 const User = ({ userId }) => {
-  const user = useSelector(state => selectUserById(state, userId))
   const navigate = useNavigate()
+  const { user } = useGetUsersQuery('usersList', {
+    selectFromResult: ({ data }) => ({
+      user: data?.entities[userId],
+    }),
+  })
 
   if (user) {
     const handleEdit = () => navigate(`/dash/users/${userId}`)
@@ -36,4 +40,6 @@ const User = ({ userId }) => {
   } else return null
 }
 
-export default User
+const memoizedUser = memo(User)
+
+export default memoizedUser

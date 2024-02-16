@@ -7,9 +7,9 @@ import classNames from 'classnames'
 import { useAddNewNoteMutation } from './notesApiSlice'
 
 const NewNoteForm = ({ users }) => {
+  const navigate = useNavigate()
   const [addNewNote, { isLoading, isSuccess, isError, error }] =
     useAddNewNoteMutation()
-  const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
