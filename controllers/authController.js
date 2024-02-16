@@ -1,13 +1,12 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
 const TOKEN_EXPIRES = require('../config/tokenExpires')
 
 // @desc Login
 // @route POST /auth
 // @access Public
-const login = asyncHandler(async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body
   if (!username || !password) {
     return res.status(400).json({ message: 'All fields are required' })
@@ -50,12 +49,12 @@ const login = asyncHandler(async (req, res) => {
 
   // Send accessToken containing username and roles
   res.json({ accessToken })
-})
+}
 
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = asyncHandler(async (req, res) => {
+const refresh = async (req, res) => {
   const cookies = req.cookies
   if (!cookies.jwt) {
     return res.status(401).json({ message: 'Unauthorized' })
@@ -66,7 +65,7 @@ const refresh = asyncHandler(async (req, res) => {
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
-    asyncHandler(async (err, decoded) => {
+    async (err, decoded) => {
       if (err) {
         return res.status(403).json({ message: 'Forbidden' })
       }
@@ -90,14 +89,14 @@ const refresh = asyncHandler(async (req, res) => {
       )
 
       res.json({ accessToken })
-    })
+    }
   )
-})
+}
 
 // @desc Logout
 // @route POST /auth/logout
 // @access Public - just to clear cookie if exist
-const logout = asyncHandler(async (req, res) => {
+const logout = async (req, res) => {
   const cookies = req.cookies
   if (!cookies?.jwt) {
     return res.sendStatus(204) // No content
@@ -105,6 +104,6 @@ const logout = asyncHandler(async (req, res) => {
 
   res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'none' })
   res.json({ message: 'Cookie cleared' })
-})
+}
 
 module.exports = { login, refresh, logout }
